@@ -14,9 +14,7 @@ import {
   @Controller('api/articles')
   export class ArticleController {
     constructor(private readonly articleService: ArticleService) {}
-  
-    @Get('/test')
-    
+     
     // Get all articles
     @Get('/')
     async findAll() {
