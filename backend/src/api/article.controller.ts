@@ -1,13 +1,11 @@
 import {
     Body,
     Controller,
-    Delete,
     Get,
     HttpException,
     HttpStatus,
     Param,
-    Post,
-    Put,
+    Post
   } from '@nestjs/common';
   import { ArticleService } from './article.service';
   import { CreateArticleDto } from './create-article.dto';

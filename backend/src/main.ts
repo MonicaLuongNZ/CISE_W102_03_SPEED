@@ -8,4 +8,7 @@ async function bootstrap() {
   const port = process.env.PORT || 5000;
   await app.listen(port, () => console.log(`Server running on port ${port}`));
 }
-bootstrap();
+bootstrap().catch((err) => {
+  console.error('Failed to start the server:', err);
+  process.exit(1);
+});
