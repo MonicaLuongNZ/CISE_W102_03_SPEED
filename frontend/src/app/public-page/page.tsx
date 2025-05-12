@@ -1,13 +1,13 @@
 'use client'
 
-import HomePage from "@/components/home-page";
+import PublicPage from "@/components/public/public-page";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-export default function Home() {
+export default function PublicHome() {
   return (
     <main>
-      <HomePage/>
+      <PublicPage/>
     </main>
   );
 }
