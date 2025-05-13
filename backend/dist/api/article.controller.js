@@ -47,7 +47,7 @@ let ArticleController = class ArticleController {
     async addArticle(createArticleDto) {
         try {
             await this.articleService.create(createArticleDto);
-            return { message: 'Article added successfully' };
+            return new common_1.HttpException('Created', common_1.HttpStatus.CREATED);
         }
         catch {
             throw new common_1.HttpException({

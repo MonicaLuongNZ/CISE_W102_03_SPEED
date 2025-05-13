@@ -1,5 +1,17 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import Header from '../header';
 function PublicPage() {
+    const router = useRouter();
+    
+      const handleSubmitArticleClick = () => {
+        router.push('/public-page/submit-article-page');
+      };
+
+      const handleSearchEvidenceClick = () => {
+        router.push('/public-page/submit-article-page');
+      };
 
     return (
         <div className="container-fluid">
@@ -11,13 +23,15 @@ function PublicPage() {
                             <input name="public_role" 
                                 className="btn btn-warning w-100 text-white" 
                                 type="button" 
-                                value={"Submit Article"} />
+                                value={"Submit Article"}
+                                onClick={handleSubmitArticleClick}/>
                         </div>
                         <div className="col-12 text-center my-2">
                             <input name="public_role" 
                                 className="btn btn-success w-100 text-white" 
                                 type="button" 
-                                value={"Search Evidence"}/>
+                                value={"Search Evidence"}
+                                onClick={handleSearchEvidenceClick}/>
                         </div>
                     </div>
                 </div>

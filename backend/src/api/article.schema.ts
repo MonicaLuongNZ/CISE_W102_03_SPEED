@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Date, HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 export type ArticleDocument = HydratedDocument<Article>;
 
@@ -14,8 +14,8 @@ export class Article {
   @Prop({ required: true })
   journal_name: string;
 
-  @Prop({ type: Date })
-  published_year: Date;
+  @Prop({ required: true })
+  published_year: number;
 
   @Prop()
   volume: string;
@@ -26,17 +26,21 @@ export class Article {
   @Prop()
   pages: string;
 
-  @Prop()
+  @Prop({ required: true })
   doi: string;
 
-  @Prop({ default: 'pending' })
+  @Prop({ default: 'Waiting for moderator' })
   status: string;
+
+  @Prop({ default: '' })
+  se_practice: string
   
-  @Prop()
+  @Prop({ default: '' })
   claim: string;
 
-  @Prop()
-  evidence: string;  
+  @Prop({ default: '' })
+  evidence: string;
+  
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);
