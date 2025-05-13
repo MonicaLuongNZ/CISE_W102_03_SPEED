@@ -1,3 +1,4 @@
+import { HttpException } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './create-article.dto';
 export declare class ArticleController {
@@ -5,7 +6,5 @@ export declare class ArticleController {
     constructor(articleService: ArticleService);
     findAll(): Promise<import("./article.schema").Article[]>;
     findOne(id: string): Promise<import("./article.schema").Article | null>;
-    addArticle(createArticleDto: CreateArticleDto): Promise<{
-        message: string;
-    }>;
+    addArticle(createArticleDto: CreateArticleDto): Promise<HttpException>;
 }

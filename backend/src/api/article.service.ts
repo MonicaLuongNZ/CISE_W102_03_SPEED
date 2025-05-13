@@ -16,8 +16,13 @@ export class ArticleService {
     return await this.articleModel.findById(id).exec();
   }
 
+  // Create an article
   async create(createarticleDto: CreateArticleDto) {
     return await this.articleModel.create(createarticleDto);
   }
+
+  async findByMethodName(sePractice: string): Promise<Article | null> {
+  return await this.articleModel.findOne({ "se-practice": sePractice }).exec();
+}
 
 }
