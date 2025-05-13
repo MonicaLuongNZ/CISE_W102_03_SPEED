@@ -38,8 +38,8 @@ __decorate([
     __metadata("design:type", String)
 ], Article.prototype, "journal_name", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: Date }),
-    __metadata("design:type", Object)
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", Number)
 ], Article.prototype, "published_year", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
