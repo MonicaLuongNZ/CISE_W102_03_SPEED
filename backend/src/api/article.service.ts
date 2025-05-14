@@ -19,5 +19,10 @@ export class ArticleService {
   async create(createarticleDto: CreateArticleDto) {
     return await this.articleModel.create(createarticleDto);
   }
+  //Finds article for the analysis that's been approved by the moderator(s)
+  async findArticlesForAnalysis(): Promise<Article[]> 
+  {
+    return this.articleModel.find({ status: 'approved' }).exec();
+  }
 
 }

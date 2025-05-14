@@ -23,6 +23,15 @@ let Article = class Article {
     status;
     claim;
     evidence;
+    moderatedBy;
+    moderationReason;
+    moderatedAt;
+    analyzedBy;
+    analyzedAt;
+    evidenceType;
+    source;
+    summary;
+    tags;
 };
 exports.Article = Article;
 __decorate([
@@ -69,6 +78,42 @@ __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Article.prototype, "evidence", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "moderatedBy", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "moderationReason", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Date }),
+    __metadata("design:type", Object)
+], Article.prototype, "moderatedAt", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "analyzedBy", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Date }),
+    __metadata("design:type", Object)
+], Article.prototype, "analyzedAt", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "evidenceType", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "source", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "summary", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [String] }),
+    __metadata("design:type", Array)
+], Article.prototype, "tags", void 0);
 exports.Article = Article = __decorate([
     (0, mongoose_1.Schema)()
 ], Article);

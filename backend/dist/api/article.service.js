@@ -31,6 +31,9 @@ let ArticleService = class ArticleService {
     async create(createarticleDto) {
         return await this.articleModel.create(createarticleDto);
     }
+    async findArticlesForAnalysis() {
+        return this.articleModel.find({ status: 'approved' }).exec();
+    }
 };
 exports.ArticleService = ArticleService;
 exports.ArticleService = ArticleService = __decorate([

@@ -8,7 +8,7 @@ export class Article {
   @Prop({ required: true })
   title: string;
 
- @Prop({ required: true })
+  @Prop({ required: true })
   authors: string;
 
   @Prop({ required: true })
@@ -30,13 +30,42 @@ export class Article {
   doi: string;
 
   @Prop({ default: 'pending' })
-  status: string;
-  
+  status: 'pending' | 'approved' | 'rejected' | 'analyzed';
+
   @Prop()
   claim: string;
 
   @Prop()
-  evidence: string;  
+  evidence: string;
+
+  // Created moderator fields - Brad
+  @Prop()
+  moderatedBy?: string; 
+
+  @Prop()
+  moderationReason?: string; 
+
+  @Prop({ type: Date })
+  moderatedAt?: Date;
+
+  // Analyst fields
+  @Prop()
+  analyzedBy?: string; 
+  
+  @Prop({ type: Date })
+  analyzedAt?: Date;
+
+  @Prop()
+  evidenceType?: string;
+
+  @Prop()
+  source?: string;
+
+  @Prop()
+  summary?: string;
+
+  @Prop({ type: [String] })
+  tags?: string[];
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

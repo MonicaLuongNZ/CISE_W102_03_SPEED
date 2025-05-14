@@ -11,4 +11,5 @@ export declare class ArticleService {
     } & {
         __v: number;
     }>;
+    findArticlesForAnalysis(): Promise<Article[]>;
 }

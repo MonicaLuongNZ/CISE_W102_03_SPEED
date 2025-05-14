@@ -9,9 +9,18 @@ export declare class Article {
     number: string;
     pages: string;
     doi: string;
-    status: string;
+    status: 'pending' | 'approved' | 'rejected' | 'analyzed';
     claim: string;
     evidence: string;
+    moderatedBy?: string;
+    moderationReason?: string;
+    moderatedAt?: Date;
+    analyzedBy?: string;
+    analyzedAt?: Date;
+    evidenceType?: string;
+    source?: string;
+    summary?: string;
+    tags?: string[];
 }
 export declare const ArticleSchema: import("mongoose").Schema<Article, import("mongoose").Model<Article, any, any, any, import("mongoose").Document<unknown, any, Article, any> & Article & {
     _id: import("mongoose").Types.ObjectId;

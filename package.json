@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@nestjs/mongoose": "^11.0.3",
+    "mongoose": "^8.14.3"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.96"
+  }
+}
