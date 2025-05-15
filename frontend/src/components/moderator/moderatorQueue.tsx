@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Article } from './../article'; // Adjust the path if needed
+import { Article } from '../article'; // Adjust the path if needed
 
 export const ModeratorQueue: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);

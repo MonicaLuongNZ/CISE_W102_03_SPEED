@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "bibtex-parse-js": "^0.0.24",
+    "@retorquere/bibtex-parser": "^9.0.17",
+    "bibtex-parse-js": "^0.0.23",
     "bootstrap": "^5.3.6",
     "bootstrap-icons": "^1.12.1",
     "next": "15.3.1",

@@ -19,30 +19,32 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let ArticleService = class ArticleService {
     articleModel;
+    constructor(articleModel) {
+        this.articleModel = articleModel;
+    }
+    async create(dto) {
+        return this.articleModel.create(dto);
+    }
+    async findAll() {
+        return this.articleModel.find().exec();
+    }
+    async findOne(id) {
+        if (!(0, mongoose_2.isValidObjectId)(id))
+            throw new common_1.BadRequestException('Invalid ID');
+        return this.articleModel.findById(id).exec();
+    }
     async findPending() {
-        return await this.articleModel.find({ status: 'pending' }).exec();
+        return this.articleModel.find({ status: 'pending' }).exec();
     }
     async approveArticle(id) {
-        return await this.articleModel
+        return this.articleModel
             .findByIdAndUpdate(id, { status: 'approved' }, { new: true })
             .exec();
     }
     async rejectArticle(id) {
-        return await this.articleModel
+        return this.articleModel
             .findByIdAndUpdate(id, { status: 'rejected' }, { new: true })
             .exec();
-    }
-    constructor(articleModel) {
-        this.articleModel = articleModel;
-    }
-    async findAll() {
-        return await this.articleModel.find().exec();
-    }
-    async findOne(id) {
-        return await this.articleModel.findById(id).exec();
-    }
-    async create(createarticleDto) {
-        return await this.articleModel.create(createarticleDto);
     }
     async findByMethodName(sePractice) {
         return await this.articleModel

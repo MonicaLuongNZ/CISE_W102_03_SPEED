@@ -25,6 +25,8 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/platform-express": "^11.0.1",
+    "bibtex-parse-js": "^0.0.23",
+    "citation-js": "^0.7.19",
     "dotenv": "^16.5.0",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.0",

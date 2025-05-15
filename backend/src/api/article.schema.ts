@@ -29,11 +29,7 @@ export class Article {
   @Prop({ required: true })
   doi: string;
 
-  @Prop({
-    type: String,
-    enum: ['pending', 'approved', 'rejected'],
-    default: 'pending',
-  })
+  @Prop({ default: 'pending', enum: ['pending', 'approved', 'rejected'] })
   status: string;
 
   @Prop({ default: '' })
