@@ -21,6 +21,7 @@ let Article = class Article {
     pages;
     doi;
     status;
+    se_practice;
     claim;
     evidence;
 };
@@ -54,19 +55,27 @@ __decorate([
     __metadata("design:type", String)
 ], Article.prototype, "pages", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Article.prototype, "doi", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: 'pending' }),
+    (0, mongoose_1.Prop)({
+        type: String,
+        enum: ['pending', 'approved', 'rejected'],
+        default: 'pending',
+    }),
     __metadata("design:type", String)
 ], Article.prototype, "status", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ default: '' }),
+    __metadata("design:type", String)
+], Article.prototype, "se_practice", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: '' }),
     __metadata("design:type", String)
 ], Article.prototype, "claim", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({ default: '' }),
     __metadata("design:type", String)
 ], Article.prototype, "evidence", void 0);
 exports.Article = Article = __decorate([

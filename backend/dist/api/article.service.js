@@ -19,6 +19,19 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let ArticleService = class ArticleService {
     articleModel;
+    async findPending() {
+        return await this.articleModel.find({ status: 'pending' }).exec();
+    }
+    async approveArticle(id) {
+        return await this.articleModel
+            .findByIdAndUpdate(id, { status: 'approved' }, { new: true })
+            .exec();
+    }
+    async rejectArticle(id) {
+        return await this.articleModel
+            .findByIdAndUpdate(id, { status: 'rejected' }, { new: true })
+            .exec();
+    }
     constructor(articleModel) {
         this.articleModel = articleModel;
     }
@@ -30,6 +43,11 @@ let ArticleService = class ArticleService {
     }
     async create(createarticleDto) {
         return await this.articleModel.create(createarticleDto);
+    }
+    async findByMethodName(sePractice) {
+        return await this.articleModel
+            .findOne({ 'se-practice': sePractice })
+            .exec();
     }
 };
 exports.ArticleService = ArticleService;

@@ -3,6 +3,9 @@ import { Model } from 'mongoose';
 import { CreateArticleDto } from './create-article.dto';
 export declare class ArticleService {
     private articleModel;
+    findPending(): Promise<Article[]>;
+    approveArticle(id: string): Promise<Article | null>;
+    rejectArticle(id: string): Promise<Article | null>;
     constructor(articleModel: Model<Article>);
     findAll(): Promise<Article[]>;
     findOne(id: string): Promise<Article | null>;
@@ -11,4 +14,5 @@ export declare class ArticleService {
     } & {
         __v: number;
     }>;
+    findByMethodName(sePractice: string): Promise<Article | null>;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { Article } from './article.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -6,7 +7,25 @@ import { CreateArticleDto } from './create-article.dto';
 
 @Injectable()
 export class ArticleService {
-  constructor(@InjectModel(Article.name) private articleModel: Model<Article>) {}
+  async findPending(): Promise<Article[]> {
+    return await this.articleModel.find({ status: 'pending' }).exec();
+  }
+  // Approve an article by ID
+  async approveArticle(id: string): Promise<Article | null> {
+    return await this.articleModel
+      .findByIdAndUpdate(id, { status: 'approved' }, { new: true })
+      .exec();
+  }
+
+  async rejectArticle(id: string): Promise<Article | null> {
+    return await this.articleModel
+      .findByIdAndUpdate(id, { status: 'rejected' }, { new: true })
+      .exec();
+  }
+
+  constructor(
+    @InjectModel(Article.name) private articleModel: Model<Article>,
+  ) {}
 
   async findAll(): Promise<Article[]> {
     return await this.articleModel.find().exec();
@@ -22,7 +41,8 @@ export class ArticleService {
   }
 
   async findByMethodName(sePractice: string): Promise<Article | null> {
-  return await this.articleModel.findOne({ "se-practice": sePractice }).exec();
-}
-
+    return await this.articleModel
+      .findOne({ 'se-practice': sePractice })
+      .exec();
+  }
 }

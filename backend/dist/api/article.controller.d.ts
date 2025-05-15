@@ -7,4 +7,7 @@ export declare class ArticleController {
     findAll(): Promise<import("./article.schema").Article[]>;
     findOne(id: string): Promise<import("./article.schema").Article | null>;
     addArticle(createArticleDto: CreateArticleDto): Promise<HttpException>;
+    getPendingArticles(): Promise<import("./article.schema").Article[]>;
+    approveArticle(id: string): Promise<import("./article.schema").Article | null>;
+    rejectArticle(id: string): Promise<import("./article.schema").Article | null>;
 }

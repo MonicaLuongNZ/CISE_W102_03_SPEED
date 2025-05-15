@@ -17,6 +17,9 @@ const common_1 = require("@nestjs/common");
 const article_service_1 = require("./article.service");
 const create_article_dto_1 = require("./create-article.dto");
 const console_1 = require("console");
+const common_2 = require("@nestjs/common");
+const roles_decorator_1 = require("../roles/roles.decorator");
+const roles_guard_1 = require("../roles/roles.guard");
 let ArticleController = class ArticleController {
     articleService;
     constructor(articleService) {
@@ -56,6 +59,39 @@ let ArticleController = class ArticleController {
             }, common_1.HttpStatus.BAD_REQUEST, { cause: console_1.error });
         }
     }
+    getPendingArticles() {
+        try {
+            return this.articleService.findPending();
+        }
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.INTERNAL_SERVER_ERROR,
+                error: 'Error retrieving pending articles',
+            }, common_1.HttpStatus.INTERNAL_SERVER_ERROR, { cause: console_1.error });
+        }
+    }
+    approveArticle(id) {
+        try {
+            return this.articleService.approveArticle(id);
+        }
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: 'Error approving article',
+            }, common_1.HttpStatus.BAD_REQUEST, { cause: console_1.error });
+        }
+    }
+    rejectArticle(id) {
+        try {
+            return this.articleService.rejectArticle(id);
+        }
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: 'Error rejecting article',
+            }, common_1.HttpStatus.BAD_REQUEST, { cause: console_1.error });
+        }
+    }
 };
 exports.ArticleController = ArticleController;
 __decorate([
@@ -78,6 +114,32 @@ __decorate([
     __metadata("design:paramtypes", [create_article_dto_1.CreateArticleDto]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "addArticle", null);
+__decorate([
+    (0, common_1.Get)('/moderation/pending'),
+    (0, roles_decorator_1.Roles)('moderator'),
+    (0, common_2.UseGuards)(roles_guard_1.RolesGuard),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ArticleController.prototype, "getPendingArticles", null);
+__decorate([
+    (0, common_2.Patch)('/moderation/approve/:id'),
+    (0, roles_decorator_1.Roles)('moderator'),
+    (0, common_2.UseGuards)(roles_guard_1.RolesGuard),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ArticleController.prototype, "approveArticle", null);
+__decorate([
+    (0, common_2.Patch)('/moderation/reject/:id'),
+    (0, roles_decorator_1.Roles)('moderator'),
+    (0, common_2.UseGuards)(roles_guard_1.RolesGuard),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ArticleController.prototype, "rejectArticle", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('api/articles'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])
