@@ -28,7 +28,7 @@ export class ArticleController {
     return this.articleService.findAll();
   }
 
-  // 2) Moderation: list pending (must come *before* the `:id` route!)
+  // 2) Moderation (pending, approve, reject)
   @Get('pending')
   async findPending(): Promise<Article[]> {
     return this.articleService.findPending();
@@ -48,7 +48,13 @@ export class ArticleController {
     return updated;
   }
 
-  // 3) Public: fetch one by ID (generic catch-all)
+  // 3) Public: list approved articles
+  @Get('approved')
+  findApproved(): Promise<Article[]> {
+    return this.articleService.findApproved();
+  }
+
+  // 4) Public: fetch one by ID (generic catch-all)
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Article> {
     const art = await this.articleService.findOne(id);
@@ -56,7 +62,7 @@ export class ArticleController {
     return art;
   }
 
-  // 4) Public: create
+  // 5) Public: create
   @Post()
   create(@Body() dto: CreateArticleDto): Promise<Article> {
     return this.articleService.create(dto);

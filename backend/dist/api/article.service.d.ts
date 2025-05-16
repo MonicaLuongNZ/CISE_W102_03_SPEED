@@ -7,8 +7,9 @@ export declare class ArticleService {
     create(dto: CreateArticleDto): Promise<Article>;
     findAll(): Promise<Article[]>;
     findOne(id: string): Promise<Article | null>;
+    findByMethodName(sePractice: string): Promise<Article | null>;
     findPending(): Promise<Article[]>;
     approveArticle(id: string): Promise<Article | null>;
     rejectArticle(id: string): Promise<Article | null>;
-    findByMethodName(sePractice: string): Promise<Article | null>;
+    findApproved(): Promise<Article[]>;
 }

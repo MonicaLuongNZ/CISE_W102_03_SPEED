@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 
 export type Article = {
+    evidence: ReactNode;
+    claim: ReactNode;
     status: ReactNode;
     _id?: string;
     title?: string;
@@ -23,5 +25,7 @@ export const DefaultEmptyArticle: Article = {
     number: '',
     pages: '',
     doi: '',
-    status: undefined
+    status: undefined,
+    evidence: undefined,
+    claim: undefined
 }

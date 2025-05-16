@@ -33,6 +33,11 @@ let ArticleService = class ArticleService {
             throw new common_1.BadRequestException('Invalid ID');
         return this.articleModel.findById(id).exec();
     }
+    async findByMethodName(sePractice) {
+        return await this.articleModel
+            .findOne({ 'se-practice': sePractice })
+            .exec();
+    }
     async findPending() {
         return this.articleModel.find({ status: 'pending' }).exec();
     }
@@ -46,10 +51,8 @@ let ArticleService = class ArticleService {
             .findByIdAndUpdate(id, { status: 'rejected' }, { new: true })
             .exec();
     }
-    async findByMethodName(sePractice) {
-        return await this.articleModel
-            .findOne({ 'se-practice': sePractice })
-            .exec();
+    async findApproved() {
+        return this.articleModel.find({ status: 'approved' }).exec();
     }
 };
 exports.ArticleService = ArticleService;

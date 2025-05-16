@@ -1,17 +1,47 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '../header';
+import { Article } from '../article';
+
 function PublicPage() {
     const router = useRouter();
-    
-      const handleSubmitArticleClick = () => {
-        router.push('/public-page/submit-article-page');
-      };
 
-      const handleSearchEvidenceClick = () => {
-        router.push('/public-page/submit-article-page');
-      };
+    // ─── NEW: state for approved articles ───────────────────────
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [loading, setLoading]   = useState(true);
+    const [error, setError]       = useState<string | null>(null);
+    
+    // safe backend URL
+    //const BACKEND = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000').replace(/\/$/,'');
+
+    // ─── NEW: load approved articles on mount ───────────────────
+    useEffect(() => {
+    fetch(`http://localhost:5000/api/articles/approved`)
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const ct = res.headers.get('content-type') || '';
+        if (!ct.includes('application/json')) throw new Error('Invalid response');
+        return res.json();
+      })
+      .then((data) => {
+        if (Array.isArray(data)) setArticles(data);
+        else throw new Error('Expected an array');
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err.message);
+      })
+      .finally(() => setLoading(false));
+    }, []);
+
+    const handleSubmitArticleClick = () => {
+      router.push('/public-page/submit-article-page');
+    };
+    const handleSearchEvidenceClick = () => {
+      router.push('/public-page/submit-article-page');
+    };
 
     return (
         <div className="container-fluid">
@@ -55,31 +85,54 @@ function PublicPage() {
                                     <th>Evidence</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+                            {loading ? (
+                <tbody>
+                  <tr>
+                    <td colSpan={7}>Loading articles…</td>
+                  </tr>
+                </tbody>
+              ) : error ? (
+                <tbody>
+                  <tr>
+                    <td colSpan={7} className="text-danger">
+                      Error: {error}
+                    </td>
+                  </tr>
+                </tbody>
+              ) : articles.length === 0 ? (
+                <tbody>
+                  <tr>
+                    <td colSpan={7}>No approved articles available.</td>
+                  </tr>
+                </tbody>
+              ) : (
+                <tbody>
+                  {articles.map((a) => (
+                    <tr key={a._id!}>
+                      <td>{a.title}</td>
+                      <td>{a.authors}</td>
+                      <td>{a.journal_name}</td>
+                      <td>{a.published_year}</td>
+                      <td>
+                        <a
+                          href={`https://doi.org/${a.doi}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {a.doi}
+                        </a>
+                      </td>
+                      <td>{a.claim}</td>
+                      <td>{a.evidence}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
+            </table>
+          </div>
         </div>
-      );
+      </div>
+    </div>
+  );
 }
 export default PublicPage;

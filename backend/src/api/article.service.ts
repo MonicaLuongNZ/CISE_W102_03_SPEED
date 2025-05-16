@@ -22,6 +22,12 @@ export class ArticleService {
     return this.articleModel.findById(id).exec();
   }
 
+  async findByMethodName(sePractice: string): Promise<Article | null> {
+    return await this.articleModel
+      .findOne({ 'se-practice': sePractice })
+      .exec();
+  }
+
   /** Moderator actions **/
   async findPending(): Promise<Article[]> {
     return this.articleModel.find({ status: 'pending' }).exec();
@@ -39,9 +45,8 @@ export class ArticleService {
       .exec();
   }
 
-  async findByMethodName(sePractice: string): Promise<Article | null> {
-    return await this.articleModel
-      .findOne({ 'se-practice': sePractice })
-      .exec();
+  /** Fetch only approved articles **/
+  async findApproved(): Promise<Article[]> {
+    return this.articleModel.find({ status: 'approved' }).exec();
   }
 }

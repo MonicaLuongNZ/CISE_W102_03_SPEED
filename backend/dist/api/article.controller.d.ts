@@ -8,6 +8,7 @@ export declare class ArticleController {
     findPending(): Promise<Article[]>;
     approveArticle(id: string): Promise<Article>;
     rejectArticle(id: string): Promise<Article>;
+    findApproved(): Promise<Article[]>;
     findOne(id: string): Promise<Article>;
     create(dto: CreateArticleDto): Promise<Article>;
 }

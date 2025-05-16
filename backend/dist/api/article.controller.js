@@ -39,6 +39,9 @@ let ArticleController = class ArticleController {
             throw new common_1.NotFoundException('Article not found');
         return updated;
     }
+    findApproved() {
+        return this.articleService.findApproved();
+    }
     async findOne(id) {
         const art = await this.articleService.findOne(id);
         if (!art)
@@ -76,6 +79,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "rejectArticle", null);
+__decorate([
+    (0, common_1.Get)('approved'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "findApproved", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
