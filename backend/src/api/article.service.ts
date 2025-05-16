@@ -10,7 +10,7 @@ export class ArticleService {
     @InjectModel(Article.name) private articleModel: Model<ArticleDocument>,
   ) {}
 
-  /** Public submissions **/
+  // Public submissions
   async create(dto: CreateArticleDto): Promise<Article> {
     return this.articleModel.create(dto);
   }
@@ -28,7 +28,7 @@ export class ArticleService {
       .exec();
   }
 
-  /** Moderator actions **/
+  // Moderator actions
   async findPending(): Promise<Article[]> {
     return this.articleModel.find({ status: 'pending' }).exec();
   }
@@ -45,7 +45,7 @@ export class ArticleService {
       .exec();
   }
 
-  /** Fetch only approved articles **/
+  // Fetch only approved articles
   async findApproved(): Promise<Article[]> {
     return this.articleModel.find({ status: 'approved' }).exec();
   }

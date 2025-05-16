@@ -4,31 +4,31 @@ import {
   Body,
   Controller,
   Get,
-  //HttpException,
-  //HttpStatus,
+  //HttpException, // to be used later
+  //HttpStatus,  // to be used later
   NotFoundException,
   Param,
   Patch,
   Post,
-  //UseGuards,
+  //UseGuards, // to be used later
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './create-article.dto';
-//import { Roles } from '../roles/roles.decorator';
-//import { RolesGuard } from '../roles/roles.guard';
+//import { Roles } from '../roles/roles.decorator';  // to be used later
+//import { RolesGuard } from '../roles/roles.guard'; // to be used later
 import { Article } from './article.schema';
 
 @Controller('api/articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
-  // 1) Public: list all articles
+  // Public: list all articles
   @Get()
   findAll(): Promise<Article[]> {
     return this.articleService.findAll();
   }
 
-  // 2) Moderation (pending, approve, reject)
+  // Moderation: article status (pending, approve, reject)
   @Get('pending')
   async findPending(): Promise<Article[]> {
     return this.articleService.findPending();
@@ -48,13 +48,13 @@ export class ArticleController {
     return updated;
   }
 
-  // 3) Public: list approved articles
+  // Public: list approved articles
   @Get('approved')
   findApproved(): Promise<Article[]> {
     return this.articleService.findApproved();
   }
 
-  // 4) Public: fetch one by ID (generic catch-all)
+  // Public: fetch one by ID
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Article> {
     const art = await this.articleService.findOne(id);
@@ -62,7 +62,7 @@ export class ArticleController {
     return art;
   }
 
-  // 5) Public: create
+  // Public: create
   @Post()
   create(@Body() dto: CreateArticleDto): Promise<Article> {
     return this.articleService.create(dto);
