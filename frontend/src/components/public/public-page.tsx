@@ -7,33 +7,34 @@ import { Article } from '../article';
 
 function PublicPage() {
     const router = useRouter();
-
-    // ─── NEW: state for approved articles ───────────────────────
     const [articles, setArticles] = useState<Article[]>([]);
     const [loading, setLoading]   = useState(true);
     const [error, setError]       = useState<string | null>(null);
     
-    // safe backend URL
     //const BACKEND = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000').replace(/\/$/,'');
 
-    // ─── NEW: load approved articles on mount ───────────────────
+    // Fetch pending articles when the component mounts
     useEffect(() => {
     fetch(`http://localhost:5000/api/articles/approved`)
       .then(async (res) => {
+        // Check HTTP status
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        // Validate JSON response
         const ct = res.headers.get('content-type') || '';
         if (!ct.includes('application/json')) throw new Error('Invalid response');
         return res.json();
       })
       .then((data) => {
+        // Ensure the response is an array before setting state
         if (Array.isArray(data)) setArticles(data);
         else throw new Error('Expected an array');
       })
       .catch((err) => {
+        // Handle fetch or parsing errors
         console.error(err);
         setError(err.message);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setLoading(false)); // Turn off loading
     }, []);
 
     const handleSubmitArticleClick = () => {
