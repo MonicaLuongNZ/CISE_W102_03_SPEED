@@ -16,68 +16,89 @@ exports.ArticleController = void 0;
 const common_1 = require("@nestjs/common");
 const article_service_1 = require("./article.service");
 const create_article_dto_1 = require("./create-article.dto");
-const console_1 = require("console");
 let ArticleController = class ArticleController {
     articleService;
     constructor(articleService) {
         this.articleService = articleService;
     }
-    async findAll() {
-        try {
-            return this.articleService.findAll();
-        }
-        catch {
-            throw new common_1.HttpException({
-                status: common_1.HttpStatus.NOT_FOUND,
-                error: 'No Articles found',
-            }, common_1.HttpStatus.NOT_FOUND, { cause: console_1.error });
-        }
+    findAll() {
+        return this.articleService.findAll();
+    }
+    async findPending() {
+        return this.articleService.findPending();
+    }
+    async approveArticle(id) {
+        const updated = await this.articleService.approveArticle(id);
+        if (!updated)
+            throw new common_1.NotFoundException('Article not found');
+        return updated;
+    }
+    async rejectArticle(id) {
+        const updated = await this.articleService.rejectArticle(id);
+        if (!updated)
+            throw new common_1.NotFoundException('Article not found');
+        return updated;
+    }
+    findApproved() {
+        return this.articleService.findApproved();
     }
     async findOne(id) {
-        try {
-            return this.articleService.findOne(id);
-        }
-        catch {
-            throw new common_1.HttpException({
-                status: common_1.HttpStatus.NOT_FOUND,
-                error: 'No Article found',
-            }, common_1.HttpStatus.NOT_FOUND, { cause: console_1.error });
-        }
+        const art = await this.articleService.findOne(id);
+        if (!art)
+            throw new common_1.NotFoundException('Article not found');
+        return art;
     }
-    async addArticle(createArticleDto) {
-        try {
-            await this.articleService.create(createArticleDto);
-            return new common_1.HttpException('Created', common_1.HttpStatus.CREATED);
-        }
-        catch {
-            throw new common_1.HttpException({
-                status: common_1.HttpStatus.BAD_REQUEST,
-                error: 'Unable to add this article',
-            }, common_1.HttpStatus.BAD_REQUEST, { cause: console_1.error });
-        }
+    create(dto) {
+        return this.articleService.create(dto);
     }
 };
 exports.ArticleController = ArticleController;
 __decorate([
-    (0, common_1.Get)('/'),
+    (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)('/:id'),
+    (0, common_1.Get)('pending'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "findPending", null);
+__decorate([
+    (0, common_1.Patch)('approve/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "approveArticle", null);
+__decorate([
+    (0, common_1.Patch)('reject/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "rejectArticle", null);
+__decorate([
+    (0, common_1.Get)('approved'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "findApproved", null);
+__decorate([
+    (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Post)('/'),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_article_dto_1.CreateArticleDto]),
     __metadata("design:returntype", Promise)
-], ArticleController.prototype, "addArticle", null);
+], ArticleController.prototype, "create", null);
 exports.ArticleController = ArticleController = __decorate([
     (0, common_1.Controller)('api/articles'),
     __metadata("design:paramtypes", [article_service_1.ArticleService])

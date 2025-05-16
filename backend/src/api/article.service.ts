@@ -1,28 +1,52 @@
-import { Injectable } from '@nestjs/common';
-import { Article } from './article.schema';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { Article, ArticleDocument } from './article.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 import { CreateArticleDto } from './create-article.dto';
 
 @Injectable()
 export class ArticleService {
-  constructor(@InjectModel(Article.name) private articleModel: Model<Article>) {}
+  constructor(
+    @InjectModel(Article.name) private articleModel: Model<ArticleDocument>,
+  ) {}
 
+  // Public submissions
+  async create(dto: CreateArticleDto): Promise<Article> {
+    return this.articleModel.create(dto);
+  }
   async findAll(): Promise<Article[]> {
-    return await this.articleModel.find().exec();
+    return this.articleModel.find().exec();
   }
-
   async findOne(id: string): Promise<Article | null> {
-    return await this.articleModel.findById(id).exec();
-  }
-
-  // Create an article
-  async create(createarticleDto: CreateArticleDto) {
-    return await this.articleModel.create(createarticleDto);
+    if (!isValidObjectId(id)) throw new BadRequestException('Invalid ID');
+    return this.articleModel.findById(id).exec();
   }
 
   async findByMethodName(sePractice: string): Promise<Article | null> {
-  return await this.articleModel.findOne({ "se-practice": sePractice }).exec();
-}
+    return await this.articleModel
+      .findOne({ 'se-practice': sePractice })
+      .exec();
+  }
 
+  // Moderator actions
+  async findPending(): Promise<Article[]> {
+    return this.articleModel.find({ status: 'pending' }).exec();
+  }
+
+  async approveArticle(id: string): Promise<Article | null> {
+    return this.articleModel
+      .findByIdAndUpdate(id, { status: 'approved' }, { new: true })
+      .exec();
+  }
+
+  async rejectArticle(id: string): Promise<Article | null> {
+    return this.articleModel
+      .findByIdAndUpdate(id, { status: 'rejected' }, { new: true })
+      .exec();
+  }
+
+  // Fetch only approved articles
+  async findApproved(): Promise<Article[]> {
+    return this.articleModel.find({ status: 'approved' }).exec();
+  }
 }

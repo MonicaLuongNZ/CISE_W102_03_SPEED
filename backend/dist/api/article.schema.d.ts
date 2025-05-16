@@ -10,6 +10,7 @@ export declare class Article {
     pages: string;
     doi: string;
     status: string;
+    se_practice: string;
     claim: string;
     evidence: string;
 }

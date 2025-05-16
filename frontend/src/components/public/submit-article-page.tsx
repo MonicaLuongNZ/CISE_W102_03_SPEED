@@ -75,6 +75,7 @@ function SubmitArticlePage() {
         const entry = parsed[0].entryTags;
 
         setArticle({
+          ...DefaultEmptyArticle,
           title: entry.title || "",
           authors: entry.author || "",
           journal_name: entry.journal || "",

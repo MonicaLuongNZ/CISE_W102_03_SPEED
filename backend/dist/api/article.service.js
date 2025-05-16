@@ -22,14 +22,37 @@ let ArticleService = class ArticleService {
     constructor(articleModel) {
         this.articleModel = articleModel;
     }
+    async create(dto) {
+        return this.articleModel.create(dto);
+    }
     async findAll() {
-        return await this.articleModel.find().exec();
+        return this.articleModel.find().exec();
     }
     async findOne(id) {
-        return await this.articleModel.findById(id).exec();
+        if (!(0, mongoose_2.isValidObjectId)(id))
+            throw new common_1.BadRequestException('Invalid ID');
+        return this.articleModel.findById(id).exec();
     }
-    async create(createarticleDto) {
-        return await this.articleModel.create(createarticleDto);
+    async findByMethodName(sePractice) {
+        return await this.articleModel
+            .findOne({ 'se-practice': sePractice })
+            .exec();
+    }
+    async findPending() {
+        return this.articleModel.find({ status: 'pending' }).exec();
+    }
+    async approveArticle(id) {
+        return this.articleModel
+            .findByIdAndUpdate(id, { status: 'approved' }, { new: true })
+            .exec();
+    }
+    async rejectArticle(id) {
+        return this.articleModel
+            .findByIdAndUpdate(id, { status: 'rejected' }, { new: true })
+            .exec();
+    }
+    async findApproved() {
+        return this.articleModel.find({ status: 'approved' }).exec();
     }
 };
 exports.ArticleService = ArticleService;
