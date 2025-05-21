@@ -15,7 +15,7 @@ function PublicPage() {
 
     // Fetch pending articles when the component mounts
     useEffect(() => {
-    fetch(`http://localhost:5000/api/articles/approved`)
+   fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/status/approved`)
       .then(async (res) => {
         // Check HTTP status
         if (!res.ok) throw new Error(`HTTP ${res.status}`);

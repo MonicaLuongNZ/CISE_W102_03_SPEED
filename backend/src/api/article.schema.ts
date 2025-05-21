@@ -5,41 +5,24 @@ export type ArticleDocument = HydratedDocument<Article>;
 
 @Schema()
 export class Article {
-  @Prop({ required: true })
-  title: string;
-
-  @Prop({ required: true })
-  authors: string;
-
-  @Prop({ required: true })
-  journal_name: string;
-
-  @Prop({ required: true })
-  published_year: number;
-
-  @Prop()
-  volume: string;
-
-  @Prop()
-  number: string;
-
-  @Prop()
-  pages: string;
-
-  @Prop({ required: true })
-  doi: string;
-
-  @Prop({ default: 'pending', enum: ['pending', 'approved', 'rejected'] })
-  status: string;
-
-  @Prop({ default: '' })
-  se_practice: string;
-
-  @Prop({ default: '' })
-  claim: string;
-
-  @Prop({ default: '' })
-  evidence: string;
+  @Prop({ required: true }) title: string;
+  @Prop({ required: true }) authors: string;
+  @Prop({ required: true }) journal_name: string;
+  @Prop({ required: true }) published_year: number;
+  @Prop() volume: string;
+  @Prop() number: string;
+  @Prop() pages: string;
+  @Prop({ required: true }) doi: string;
+  @Prop({ default: 'pending', enum: ['pending', 'approved', 'rejected', 'analyzed'] })
+  status: 'pending' | 'approved' | 'rejected' | 'analyzed';
+  @Prop() claim: string;
+  @Prop() evidence: string;
+  @Prop() analyzedBy?: string;
+  @Prop({ type: Date }) analyzedAt?: Date;
+  @Prop() evidenceType?: string;
+  @Prop({ default: 'Internal' }) source?: string;
+  @Prop() summary?: string;
+  @Prop({ type: [String] }) tags?: string[];
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

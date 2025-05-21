@@ -14,9 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ArticleService = void 0;
 const common_1 = require("@nestjs/common");
-const article_schema_1 = require("./article.schema");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const article_schema_1 = require("./article.schema");
 let ArticleService = class ArticleService {
     articleModel;
     constructor(articleModel) {
@@ -33,26 +33,23 @@ let ArticleService = class ArticleService {
             throw new common_1.BadRequestException('Invalid ID');
         return this.articleModel.findById(id).exec();
     }
-    async findByMethodName(sePractice) {
-        return await this.articleModel
-            .findOne({ 'se-practice': sePractice })
-            .exec();
-    }
     async findPending() {
         return this.articleModel.find({ status: 'pending' }).exec();
     }
-    async approveArticle(id) {
-        return this.articleModel
-            .findByIdAndUpdate(id, { status: 'approved' }, { new: true })
-            .exec();
-    }
-    async rejectArticle(id) {
-        return this.articleModel
-            .findByIdAndUpdate(id, { status: 'rejected' }, { new: true })
-            .exec();
-    }
     async findApproved() {
         return this.articleModel.find({ status: 'approved' }).exec();
+    }
+    async approveArticle(id) {
+        return this.articleModel.findByIdAndUpdate(id, { status: 'approved' }, { new: true }).exec();
+    }
+    async rejectArticle(id) {
+        return this.articleModel.findByIdAndUpdate(id, { status: 'rejected' }, { new: true }).exec();
+    }
+    async findArticlesForAnalyst() {
+        return this.articleModel.find({ status: 'approved' }).exec();
+    }
+    async analyzeArticle(id, update) {
+        return this.articleModel.findByIdAndUpdate(id, { ...update, analyzedAt: new Date(), status: 'analyzed' }, { new: true }).exec();
     }
 };
 exports.ArticleService = ArticleService;

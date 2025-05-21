@@ -5,10 +5,13 @@ export declare class ArticleController {
     private readonly articleService;
     constructor(articleService: ArticleService);
     findAll(): Promise<Article[]>;
+    findOne(id: string): Promise<Article>;
+    create(createArticleDto: CreateArticleDto): Promise<{
+        message: string;
+    }>;
     findPending(): Promise<Article[]>;
+    findApproved(): Promise<Article[]>;
     approveArticle(id: string): Promise<Article>;
     rejectArticle(id: string): Promise<Article>;
-    findApproved(): Promise<Article[]>;
-    findOne(id: string): Promise<Article>;
-    create(dto: CreateArticleDto): Promise<Article>;
+    analyze(id: string, body: Partial<Article>): Promise<Article>;
 }

@@ -21,9 +21,14 @@ let Article = class Article {
     pages;
     doi;
     status;
-    se_practice;
     claim;
     evidence;
+    analyzedBy;
+    analyzedAt;
+    evidenceType;
+    source;
+    summary;
+    tags;
 };
 exports.Article = Article;
 __decorate([
@@ -59,21 +64,41 @@ __decorate([
     __metadata("design:type", String)
 ], Article.prototype, "doi", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: 'pending', enum: ['pending', 'approved', 'rejected'] }),
+    (0, mongoose_1.Prop)({ default: 'pending', enum: ['pending', 'approved', 'rejected', 'analyzed'] }),
     __metadata("design:type", String)
 ], Article.prototype, "status", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: '' }),
-    __metadata("design:type", String)
-], Article.prototype, "se_practice", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: '' }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Article.prototype, "claim", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: '' }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Article.prototype, "evidence", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "analyzedBy", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Date }),
+    __metadata("design:type", Date)
+], Article.prototype, "analyzedAt", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "evidenceType", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ default: 'Internal' }),
+    __metadata("design:type", String)
+], Article.prototype, "source", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "summary", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: [String] }),
+    __metadata("design:type", Array)
+], Article.prototype, "tags", void 0);
 exports.Article = Article = __decorate([
     (0, mongoose_1.Schema)()
 ], Article);
