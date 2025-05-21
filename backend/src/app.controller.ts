@@ -7,6 +7,6 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return 'Welcome To Speed Backend!';
+    return this.appService.getHello();
   }
 }
