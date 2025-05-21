@@ -1,5 +1,5 @@
-import { Article, ArticleDocument } from './article.schema';
 import { Model } from 'mongoose';
+import { Article, ArticleDocument } from './article.schema';
 import { CreateArticleDto } from './create-article.dto';
 export declare class ArticleService {
     private articleModel;
@@ -7,9 +7,10 @@ export declare class ArticleService {
     create(dto: CreateArticleDto): Promise<Article>;
     findAll(): Promise<Article[]>;
     findOne(id: string): Promise<Article | null>;
-    findByMethodName(sePractice: string): Promise<Article | null>;
     findPending(): Promise<Article[]>;
+    findApproved(): Promise<Article[]>;
     approveArticle(id: string): Promise<Article | null>;
     rejectArticle(id: string): Promise<Article | null>;
-    findApproved(): Promise<Article[]>;
+    findArticlesForAnalyst(): Promise<Article[]>;
+    analyzeArticle(id: string, update: Partial<Article>): Promise<Article | null>;
 }

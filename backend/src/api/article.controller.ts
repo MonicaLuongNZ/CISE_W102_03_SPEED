@@ -1,37 +1,56 @@
-// src/api/article.controller.ts
-
 import {
   Body,
   Controller,
   Get,
-  //HttpException, // to be used later
-  //HttpStatus,  // to be used later
+  HttpException,
+  HttpStatus,
   NotFoundException,
   Param,
   Patch,
   Post,
-  //UseGuards, // to be used later
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './create-article.dto';
-//import { Roles } from '../roles/roles.decorator';  // to be used later
-//import { RolesGuard } from '../roles/roles.guard'; // to be used later
 import { Article } from './article.schema';
 
 @Controller('api/articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
-  // Public: list all articles
   @Get()
-  findAll(): Promise<Article[]> {
-    return this.articleService.findAll();
+  async findAll(): Promise<Article[]> {
+    try {
+      return await this.articleService.findAll();
+    } catch {
+      throw new HttpException({ status: HttpStatus.NOT_FOUND, error: 'No articles found' }, HttpStatus.NOT_FOUND);
+    }
   }
 
-  // Moderation: article status (pending, approve, reject)
-  @Get('pending')
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Article> {
+    const article = await this.articleService.findOne(id);
+    if (!article) throw new NotFoundException('Article not found');
+    return article;
+  }
+
+  @Post()
+  async create(@Body() createArticleDto: CreateArticleDto) {
+    try {
+      await this.articleService.create(createArticleDto);
+      return { message: 'Article added successfully' };
+    } catch {
+      throw new HttpException({ status: HttpStatus.BAD_REQUEST, error: 'Unable to add this article' }, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Get('status/pending')
   async findPending(): Promise<Article[]> {
     return this.articleService.findPending();
+  }
+
+  @Get('status/approved')
+  async findApproved(): Promise<Article[]> {
+    return this.articleService.findApproved();
   }
 
   @Patch('approve/:id')
@@ -48,23 +67,11 @@ export class ArticleController {
     return updated;
   }
 
-  // Public: list approved articles
-  @Get('approved')
-  findApproved(): Promise<Article[]> {
-    return this.articleService.findApproved();
-  }
-
-  // Public: fetch one by ID
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Article> {
-    const art = await this.articleService.findOne(id);
-    if (!art) throw new NotFoundException('Article not found');
-    return art;
-  }
-
-  // Public: create
-  @Post()
-  create(@Body() dto: CreateArticleDto): Promise<Article> {
-    return this.articleService.create(dto);
+  @Post(':id/analyze')
+  async analyze(@Param('id') id: string, @Body() body: Partial<Article>): Promise<Article> {
+    const updated = await this.articleService.analyzeArticle(id, body);
+    if (!updated) throw new NotFoundException('Article not found');
+    return updated;
   }
 }
+
