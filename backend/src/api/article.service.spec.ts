@@ -18,7 +18,7 @@ describe('ArticleService', () => {
     number: '3',
     pages: '45-67',
     doi: '10.1234/medtoday.2023.123456',
-    status: 'Waiting for moderator',
+    status: 'pending',
   };
 
   const mockArticleModel = {
