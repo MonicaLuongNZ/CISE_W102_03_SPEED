@@ -13,7 +13,10 @@ export class Article {
   @Prop() number: string;
   @Prop() pages: string;
   @Prop({ required: true }) doi: string;
-  @Prop({ default: 'pending', enum: ['pending', 'approved', 'rejected', 'analyzed'] })
+  @Prop({
+    default: 'pending',
+    enum: ['pending', 'approved', 'rejected', 'analyzed'],
+  })
   status: 'pending' | 'approved' | 'rejected' | 'analyzed';
   @Prop() claim: string;
   @Prop() evidence: string;

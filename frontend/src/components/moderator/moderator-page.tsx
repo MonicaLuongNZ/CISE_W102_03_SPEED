@@ -28,7 +28,7 @@ export default function ModeratorPage() {
         setError(err.message);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [BACKEND]);
 
   const updateStatus = async (id: string, action: 'approve' | 'reject') => {
     try {

@@ -6,7 +6,9 @@ import { CreateArticleDto } from './create-article.dto';
 
 @Injectable()
 export class ArticleService {
-  constructor(@InjectModel(Article.name) private articleModel: Model<ArticleDocument>) {}
+  constructor(
+    @InjectModel(Article.name) private articleModel: Model<ArticleDocument>,
+  ) {}
 
   async create(dto: CreateArticleDto): Promise<Article> {
     return this.articleModel.create(dto);
@@ -30,22 +32,31 @@ export class ArticleService {
   }
 
   async approveArticle(id: string): Promise<Article | null> {
-    return this.articleModel.findByIdAndUpdate(id, { status: 'approved' }, { new: true }).exec();
+    return this.articleModel
+      .findByIdAndUpdate(id, { status: 'approved' }, { new: true })
+      .exec();
   }
 
   async rejectArticle(id: string): Promise<Article | null> {
-    return this.articleModel.findByIdAndUpdate(id, { status: 'rejected' }, { new: true }).exec();
+    return this.articleModel
+      .findByIdAndUpdate(id, { status: 'rejected' }, { new: true })
+      .exec();
   }
 
   async findArticlesForAnalyst(): Promise<Article[]> {
     return this.articleModel.find({ status: 'approved' }).exec();
   }
 
-  async analyzeArticle(id: string, update: Partial<Article>): Promise<Article | null> {
-    return this.articleModel.findByIdAndUpdate(
-      id,
-      { ...update, analyzedAt: new Date(), status: 'analyzed' },
-      { new: true }
-    ).exec();
+  async analyzeArticle(
+    id: string,
+    update: Partial<Article>,
+  ): Promise<Article | null> {
+    return this.articleModel
+      .findByIdAndUpdate(
+        id,
+        { ...update, analyzedAt: new Date(), status: 'analyzed' },
+        { new: true },
+      )
+      .exec();
   }
 }

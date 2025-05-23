@@ -22,7 +22,10 @@ export class ArticleController {
     try {
       return await this.articleService.findAll();
     } catch {
-      throw new HttpException({ status: HttpStatus.NOT_FOUND, error: 'No articles found' }, HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        { status: HttpStatus.NOT_FOUND, error: 'No articles found' },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 
@@ -39,7 +42,10 @@ export class ArticleController {
       await this.articleService.create(createArticleDto);
       return { message: 'Article added successfully' };
     } catch {
-      throw new HttpException({ status: HttpStatus.BAD_REQUEST, error: 'Unable to add this article' }, HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        { status: HttpStatus.BAD_REQUEST, error: 'Unable to add this article' },
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -68,10 +74,12 @@ export class ArticleController {
   }
 
   @Post(':id/analyze')
-  async analyze(@Param('id') id: string, @Body() body: Partial<Article>): Promise<Article> {
+  async analyze(
+    @Param('id') id: string,
+    @Body() body: Partial<Article>,
+  ): Promise<Article> {
     const updated = await this.articleService.analyzeArticle(id, body);
     if (!updated) throw new NotFoundException('Article not found');
     return updated;
   }
 }
-
