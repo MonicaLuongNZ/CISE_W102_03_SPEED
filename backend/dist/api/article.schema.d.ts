@@ -10,11 +10,13 @@ export declare class Article {
     pages: string;
     doi: string;
     status: 'pending' | 'approved' | 'rejected' | 'analyzed';
+    se_practice: string;
     claim: string;
-    evidence: string;
+    result_of_evidence: string;
     analyzedBy?: string;
     analyzedAt?: Date;
-    evidenceType?: string;
+    type_of_research?: string;
+    type_of_participant?: string;
     source?: string;
     summary?: string;
     tags?: string[];

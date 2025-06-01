@@ -11,6 +11,7 @@ export declare class ArticleController {
     }>;
     findPending(): Promise<Article[]>;
     findApproved(): Promise<Article[]>;
+    findAnalysed(): Promise<Article[]>;
     approveArticle(id: string): Promise<Article>;
     rejectArticle(id: string): Promise<Article>;
     analyze(id: string, body: Partial<Article>): Promise<Article>;

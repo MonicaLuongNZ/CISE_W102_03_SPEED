@@ -1,9 +1,6 @@
 import { ReactNode } from "react";
 
 export type Article = {
-    evidence: ReactNode;
-    claim: ReactNode;
-    status: ReactNode;
     _id?: string;
     title?: string;
     authors?: string;
@@ -13,6 +10,12 @@ export type Article = {
     number?: string;
     pages?: string;
     doi?: string;
+    status?: 'pending' | 'approved' | 'rejected' | 'analyzed';
+    se_practice?: string;
+    claim?: string;
+    result_of_evidence?: string;
+    type_of_research?: string;
+    type_of_participant?: string;
 };
 
 export const DefaultEmptyArticle: Article = {
@@ -26,6 +29,9 @@ export const DefaultEmptyArticle: Article = {
     pages: '',
     doi: '',
     status: undefined,
-    evidence: undefined,
-    claim: undefined
+    se_practice:'',
+    claim: '',
+    result_of_evidence: '',
+    type_of_research: '',
+    type_of_participant:''
 }

@@ -50,6 +50,9 @@ let ArticleController = class ArticleController {
     async findApproved() {
         return this.articleService.findApproved();
     }
+    async findAnalysed() {
+        return this.articleService.findAnalysedArticles();
+    }
     async approveArticle(id) {
         const updated = await this.articleService.approveArticle(id);
         if (!updated)
@@ -102,6 +105,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ArticleController.prototype, "findApproved", null);
+__decorate([
+    (0, common_1.Get)('status/analysed'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ArticleController.prototype, "findAnalysed", null);
 __decorate([
     (0, common_1.Patch)('approve/:id'),
     __param(0, (0, common_1.Param)('id')),

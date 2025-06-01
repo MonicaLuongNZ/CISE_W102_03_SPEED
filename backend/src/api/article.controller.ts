@@ -52,6 +52,10 @@ export class ArticleController {
   async findApproved(): Promise<Article[]> {
     return this.articleService.findApproved();
   }
+  @Get('status/analysed')
+  async findAnalysed(): Promise<Article[]> {
+    return this.articleService.findAnalysedArticles();
+  }
 
   @Patch('approve/:id')
   async approveArticle(@Param('id') id: string): Promise<Article> {

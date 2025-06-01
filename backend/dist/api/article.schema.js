@@ -21,11 +21,13 @@ let Article = class Article {
     pages;
     doi;
     status;
+    se_practice;
     claim;
-    evidence;
+    result_of_evidence;
     analyzedBy;
     analyzedAt;
-    evidenceType;
+    type_of_research;
+    type_of_participant;
     source;
     summary;
     tags;
@@ -70,11 +72,15 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
+], Article.prototype, "se_practice", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
 ], Article.prototype, "claim", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Article.prototype, "evidence", void 0);
+], Article.prototype, "result_of_evidence", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
@@ -86,7 +92,11 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Article.prototype, "evidenceType", void 0);
+], Article.prototype, "type_of_research", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Article.prototype, "type_of_participant", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ default: 'Internal' }),
     __metadata("design:type", String)

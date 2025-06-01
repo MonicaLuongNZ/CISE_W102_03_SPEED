@@ -1,6 +1,5 @@
-"use client"; // Enables Client Component behavior in Next.js 13+
-
-import { useRouter } from "next/navigation"; // Next.js hook for client-side navigation
+"use client"; 
+import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState, useRef } from "react";
 import Header from "../header";
 import { Article, DefaultEmptyArticle } from "../article";
@@ -10,11 +9,14 @@ import { Article, DefaultEmptyArticle } from "../article";
 function SubmitArticlePage() {
   const router = useRouter();
 
+  // State to hold the article form data
   const [article, setArticle] = useState<Article>(DefaultEmptyArticle);
 
+  // Import BibTeX parser and file input ref
   const bibtexParse = require('bibtex-parse-js');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Handler: Update article state on input change
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -29,8 +31,10 @@ function SubmitArticlePage() {
     });
   };
 
+  // State to display submission result message
   const [submitResult, setSubmitResult] = useState<string | null>(null);
 
+  // Handler: Submit the article form
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -62,38 +66,39 @@ function SubmitArticlePage() {
     }
   };
 
+  // Handler: Parse BibTeX file and populate form fields
   const handleUploadClick = () => {
-  const file = fileInputRef.current?.files?.[0];
-  if (!file) return;
+    const file = fileInputRef.current?.files?.[0];
+    if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const content = e.target?.result as string;
-    try {
-      const parsed = bibtexParse.toJSON(content);
-      if (parsed.length > 0) {
-        const entry = parsed[0].entryTags;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const content = e.target?.result as string;
+      try {
+        const parsed = bibtexParse.toJSON(content);
+        if (parsed.length > 0) {
+          const entry = parsed[0].entryTags;
 
-        setArticle({
-          ...DefaultEmptyArticle,
-          title: entry.title || "",
-          authors: entry.author || "",
-          journal_name: entry.journal || "",
-          published_year: entry.year ? parseInt(entry.year, 10) : undefined,
-          volume: entry.volume || "",
-          number: entry.number || "",
-          pages: entry.pages || "",
-          doi: entry.doi || "",
-        });
-      } else {
-        console.error("No valid BibTeX entries found.");
+          setArticle({
+            ...DefaultEmptyArticle,
+            title: entry.title || "",
+            authors: entry.author || "",
+            journal_name: entry.journal || "",
+            published_year: entry.year ? parseInt(entry.year, 10) : undefined,
+            volume: entry.volume || "",
+            number: entry.number || "",
+            pages: entry.pages || "",
+            doi: entry.doi || "",
+          });
+        } else {
+          console.error("No valid BibTeX entries found.");
+        }
+      } catch (err) {
+        console.error("Failed to parse BibTeX:", err);
       }
-    } catch (err) {
-      console.error("Failed to parse BibTeX:", err);
-    }
+    };
+    reader.readAsText(file);
   };
-  reader.readAsText(file);
-};
 
   // Handler: Navigate back to public page if user cancels
   const handleCancelClick = () => {
@@ -102,6 +107,7 @@ function SubmitArticlePage() {
 
   return (
     <div className="container-fluid">
+      {/* Page Header */}
       <Header title="SPEED" role="Public User" />
 
       <div className="row">
@@ -130,6 +136,7 @@ function SubmitArticlePage() {
             or Please fill the article details below
           </div>
 
+          {/* Article Title */}
           <div className="col-12 mb-2">
             <label className="form-label fw-bold">Article title *</label>
             <input
@@ -142,6 +149,7 @@ function SubmitArticlePage() {
             />
           </div>
 
+          {/* Authors */}
           <div className="col-12 mb-2">
             <label className="form-label fw-bold">Authors *</label>
             <input
@@ -154,6 +162,7 @@ function SubmitArticlePage() {
             />
           </div>
 
+          {/* Journal, Year, Volume, Number, Pages */}
           <div className="row mb-3">
             <div className="col-4">
               <label className="form-label fw-bold">Journal name *</label>
@@ -213,6 +222,7 @@ function SubmitArticlePage() {
             </div>
           </div>
 
+          {/* DOI */}
           <div className="col-12 mb-3">
             <label className="form-label fw-bold">DOI *</label>
             <input
@@ -225,6 +235,7 @@ function SubmitArticlePage() {
             />
           </div>
 
+          {/* Submission Result Message */}
           <div className="row">
             <div className="col-12 text-end my-3">
                 {submitResult}

@@ -48,6 +48,9 @@ let ArticleService = class ArticleService {
     async findArticlesForAnalyst() {
         return this.articleModel.find({ status: 'approved' }).exec();
     }
+    async findAnalysedArticles() {
+        return this.articleModel.find({ status: 'analyzed' }).exec();
+    }
     async analyzeArticle(id, update) {
         return this.articleModel.findByIdAndUpdate(id, { ...update, analyzedAt: new Date(), status: 'analyzed' }, { new: true }).exec();
     }
