@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import PublicPage from './public-page';
 
@@ -11,7 +11,9 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock Header component to isolate PublicPage tests
-jest.mock('../header', () => () => <div data-testid="header">Header</div>);
+const MockHeader = () => <div data-testid="header">Header</div>;
+MockHeader.displayName = 'Header';
+jest.mock('../header', () => MockHeader);
 
 // Sample mock articles to be returned by fetch
 const mockArticles = [
