@@ -41,6 +41,10 @@ export class ArticleService {
     return this.articleModel.find({ status: 'approved' }).exec();
   }
 
+  async findAnalysedArticles(): Promise<Article[]> {
+    return this.articleModel.find({ status: 'analyzed' }).exec();
+  }
+
   async analyzeArticle(id: string, update: Partial<Article>): Promise<Article | null> {
     return this.articleModel.findByIdAndUpdate(
       id,

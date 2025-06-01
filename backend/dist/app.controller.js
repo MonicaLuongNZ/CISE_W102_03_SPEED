@@ -18,7 +18,7 @@ let AppController = class AppController {
         this.appService = appService;
     }
     getHello() {
-        return 'Welcome To Speed Backend!';
+        return this.appService.getHello();
     }
 };
 exports.AppController = AppController;

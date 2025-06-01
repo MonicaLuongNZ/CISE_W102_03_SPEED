@@ -12,5 +12,6 @@ export declare class ArticleService {
     approveArticle(id: string): Promise<Article | null>;
     rejectArticle(id: string): Promise<Article | null>;
     findArticlesForAnalyst(): Promise<Article[]>;
+    findAnalysedArticles(): Promise<Article[]>;
     analyzeArticle(id: string, update: Partial<Article>): Promise<Article | null>;
 }

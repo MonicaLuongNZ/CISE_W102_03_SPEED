@@ -15,11 +15,13 @@ export class Article {
   @Prop({ required: true }) doi: string;
   @Prop({ default: 'pending', enum: ['pending', 'approved', 'rejected', 'analyzed'] })
   status: 'pending' | 'approved' | 'rejected' | 'analyzed';
+  @Prop() se_practice: string;//monica added this
   @Prop() claim: string;
-  @Prop() evidence: string;
+  @Prop() result_of_evidence: string;
   @Prop() analyzedBy?: string;
   @Prop({ type: Date }) analyzedAt?: Date;
-  @Prop() evidenceType?: string;
+  @Prop() type_of_research?: string;
+  @Prop() type_of_participant?: string;
   @Prop({ default: 'Internal' }) source?: string;
   @Prop() summary?: string;
   @Prop({ type: [String] }) tags?: string[];
