@@ -10,11 +10,6 @@ jest.mock('next/navigation', () => ({
     }),
 }));
 
-// Mock Header component to isolate PublicPage tests
-const MockHeader = () => <div data-testid="header">Header</div>;
-MockHeader.displayName = 'Header';
-jest.mock('../header', () => MockHeader);
-
 // Sample mock articles to be returned by fetch
 const mockArticles = [
     {
