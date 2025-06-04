@@ -85,8 +85,7 @@ function PublicPage() {
 
     // Sort articles by selected field and order
     const sortArticles = (sortBy: string, ascending: boolean) => {
-        console.log(`Sorting by: ${sortBy}, Order: ${ascending ? 'Ascending' : 'Descending'}`);
-
+        
         const sortedArticles = [...articlesFiltered].sort((a: any, b: any) => {
             if (typeof a[sortBy] === 'string' && typeof b[sortBy] === 'string') {
                 return ascending
@@ -154,7 +153,7 @@ function PublicPage() {
                 {/* Main content: sorting and articles table */}
                 <div className="col-8">
                     <div className='text-center fw-bold fs-2 py-4'>
-                        Software Practice Empirical Evidence Database TEST
+                        Software Practice Empirical Evidence Database
                     </div>
                     <div className='text-center fs-5 py-2'>
                         <table>
